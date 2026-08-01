@@ -1,0 +1,145 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Book {
+    int id;
+    String title;
+    String author;
+
+    Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
+
+    void display() {
+        System.out.println("-------------------------");
+        System.out.println("Book ID   : " + id);
+        System.out.println("Title     : " + title);
+        System.out.println("Author    : " + author);
+    }
+}
+
+public class BookShelf {
+
+    static ArrayList<Book> shelf = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        while (true) {
+
+            System.out.println("\n===== BOOK SHELF =====");
+            System.out.println("1. Add Book");
+            System.out.println("2. View Books");
+            System.out.println("3. Search Book");
+            System.out.println("4. Remove Book");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    addBook();
+                    break;
+
+                case 2:
+                    viewBooks();
+                    break;
+
+                case 3:
+                    searchBook();
+                    break;
+
+                case 4:
+                    removeBook();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using Book Shelf!");
+                    sc.close();
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid option!");
+            }
+        }
+    }
+
+    static void addBook() {
+
+        System.out.print("Enter Book ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Book Title: ");
+        String title = sc.nextLine();
+
+        System.out.print("Enter Author Name: ");
+        String author = sc.nextLine();
+
+        shelf.add(new Book(id, title, author));
+
+        System.out.println("Book added to shelf successfully!");
+    }
+
+    static void viewBooks() {
+
+        if (shelf.isEmpty()) {
+            System.out.println("Shelf is empty.");
+            return;
+        }
+
+        System.out.println("\nBooks in Shelf:");
+
+        for (Book book : shelf) {
+            book.display();
+        }
+    }
+
+    static void searchBook() {
+
+        System.out.print("Enter book title to search: ");
+        String title = sc.nextLine();
+
+        boolean found = false;
+
+        for (Book book : shelf) {
+
+            if (book.title.equalsIgnoreCase(title)) {
+                book.display();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Book not found.");
+        }
+    }
+
+    static void removeBook() {
+
+        System.out.print("Enter Book ID to remove: ");
+        int id = sc.nextInt();
+
+        boolean removed = false;
+
+        for (Book book : shelf) {
+
+            if (book.id == id) {
+                shelf.remove(book);
+                removed = true;
+                break;
+            }
+        }
+
+        if (removed) {
+            System.out.println("Book removed successfully.");
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+}
